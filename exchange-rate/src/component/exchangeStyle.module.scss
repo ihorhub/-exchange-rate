@@ -7,7 +7,7 @@
 %text-style-ccy {
   color: #392d30;
   font-family: Arial;
-  font-size: 22px;
+  font-size: 25px;
   font-weight: bold;
 }
 .main_container {
@@ -19,7 +19,7 @@
   border: 1px solid #cdcdcd;
   border-radius: 10px;
   background: #f3e9e9;
-  background-image: url(../icon/depositphotos_1685866-stock-illustration-grunge-ukraine-flag.jpg);
+  background-image: url(../icon/ukraine-flag.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   -webkit-box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.36);
@@ -82,17 +82,35 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+}
+.text {
+  text-align: center;
+  @extend%text-style-ccy;
+  //   &::before {
+  //     content: '';
+  //     background-image: url(../icon/orig_mark.jpg);
+  //     background-repeat: no-repeat;
+  //     background-size: 50px;
+  //     position: absolute;
+  //     left: 420px;
+  //     top: 200px;
+  //     width: 50px;
+  //     height: 30px;
+  //   }
 }
 
 .select {
   max-width: 70px;
-  height: 40px;
+  height: 45px;
+  margin: 10px 10px;
   text-align: center;
   -webkit-box-shadow: inset 0px 0px 3px 0px #000000;
   box-shadow: inset 0px 0px 3px 0px #000000;
   background: linear-gradient(to bottom, #fefffd 0%, #b3bfaa 123%);
   background-color: #f8f8f8;
   border-radius: 5px;
+  box-sizing: border-box;
   border: 1px solid #b2b8ad;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -101,16 +119,16 @@
   @extend%text-style-block-cct;
 }
 .container_input {
-  max-width: 300px;
-  height: 40px;
-  margin: 5px 5px;
+  max-width: 320px;
+  height: 45px;
+  margin: 10px 10px;
   border: 1px solid #cdcdcd;
   border-radius: 5px;
   background: #fbfbfb;
   -webkit-box-shadow: inset 0px 0px 3px 0px #000000;
   box-shadow: inset 0px 0px 3px 0px #000000;
   box-sizing: border-box;
-  @extend%text-style-block-cct;
+  @extend%text-style-ccy;
 
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -118,9 +136,6 @@
   -o-border-radius: 5px;
   text-align: center;
   &:active {
-    border: none;
-  }
-  &:focus {
     border: none;
   }
 }

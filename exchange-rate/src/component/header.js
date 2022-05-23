@@ -1,27 +1,43 @@
 import React, { useState, useEffect } from 'react'
+import { Rate } from './rate'
 import exs from './exchangeStyle.module.scss'
 const urlFinance =
-  // 'https://openexchangerates.org/api/latest.json?app_id=770556d2b59b4b4a8b064a5ca2df658e'
+  'https://openexchangerates.org/api/latest.json?app_id=770556d2b59b4b4a8b064a5ca2df658e'
+const urlPrivat =
   'https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=5 '
 
 export const Header = () => {
   const [response, setResponse] = useState([])
+  const [currency, setCurrency] = useState([])
+  const [currencyRes, setCurrencyRes] = useState([])
+  console.log(currency, 'rat')
+  console.log(currencyRes, 'currencyRes')
+  console.log(response, 'response')
   useEffect(() => {
-    fetch(urlFinance)
-      .then((res) => res.json())
-      .then((res) => {
-        setResponse(
-          res
-          // ccy: res.ccy,
-          // base_ccy: res.base_ccy,
-          // buy: res.buy,
-          // sale: res.sale
-        )
-      })
-
-    return () => {}
+    try {
+      fetch(urlFinance)
+        .then((res) => res.json())
+        .then((res) => {
+          const rat = Object.keys(res.rates)
+          setCurrency([...rat])
+          setCurrencyRes(res)
+        })
+    } catch (e) {
+      console.error(e, 'error')
+    }
   }, [])
-  console.log(response, 'respons')
+
+  useEffect(() => {
+    try {
+      fetch(urlPrivat)
+        .then((res) => res.json())
+        .then((res) => {
+          setResponse(res)
+        })
+    } catch (er) {
+      console.error(er)
+    }
+  }, [])
 
   function timeConverter(UNIX_timestamp) {
     let a = new Date(UNIX_timestamp * 1000)
@@ -42,16 +58,14 @@ export const Header = () => {
     let year = a.getFullYear()
     let month = months[a.getMonth()]
     let date = a.getDate()
-    let hour = a.getHours()
-    let min = a.getMinutes()
-    let sec = a.getSeconds()
-    let time =
-      date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec
+    let time = date + ' ' + month + ' ' + year
     return time
   }
+
+  let timedate = timeConverter(currencyRes.timestamp)
   const option = response.map((el) => (
     <div className={exs.container_rate_ccy}>
-      <p className={exs.style_rate_ccy}> {el.ccy}</p>
+      <p className={exs.style_rate_ccy}> {el.ccy} </p>
       <p className={exs.style_rate}>
         buy: {+el.buy} {el.base_ccy}
       </p>
@@ -60,13 +74,15 @@ export const Header = () => {
       </p>
     </div>
   ))
-  // console.log(timeConverter(0))
 
-  // let now = new Date()
-  // console.log(now)
   return (
     <>
-      <div className={exs.container_rate}>{option}</div>
+      <div className={exs.main_container}>
+        <div className={exs.container_rate}>{option}</div>
+        <p className={exs.text}>CONVERT -- {timedate}</p>
+        <Rate currency={currency} />
+        <Rate currency={currency} />
+      </div>
     </>
   )
 }

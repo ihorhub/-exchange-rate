@@ -1,27 +1,18 @@
 import React from 'react'
 import exr from './exchangeStyle.module.scss'
-export const Rate = () => {
+
+export const Rate = ({ currency }) => {
   return (
     <>
       <div className={exr.container_exchange}>
-        <div>
+        <div className={exr.exchange_block}>
           <input type="number" className={exr.container_input} />
           <select name="select" className={exr.select}>
-            <option value="value1">Значение 1</option>
-            <option value="value2" selected>
-              Значение 2
-            </option>
-            <option value="value3">Значение 3</option>
-          </select>
-        </div>
-        <div>
-          <input type="number" className={exr.container_input} />
-          <select name="select" className={exr.select}>
-            <option value="value1">Значение 1</option>
-            <option value="value2" selected>
-              Значение 2
-            </option>
-            <option value="value3">Значение 3</option>
+            {currency.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
           </select>
         </div>
       </div>
