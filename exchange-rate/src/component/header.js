@@ -51,7 +51,7 @@ export const Header = () => {
   }
   const option = response.map((el) => (
     <div className={exs.container_rate_ccy}>
-      <p className={exs.style_rate}> {el.ccy}</p>
+      <p className={exs.style_rate_ccy}> {el.ccy}</p>
       <p className={exs.style_rate}>
         buy: {+el.buy} {el.base_ccy}
       </p>
