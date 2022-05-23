@@ -7,25 +7,31 @@ const urlPrivat =
   'https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=5 '
 
 export const Header = () => {
+  const [isLoading, setIsLoading] = useState(false)
   const [response, setResponse] = useState([])
   const [currency, setCurrency] = useState([])
   const [currencyRes, setCurrencyRes] = useState([])
-  console.log(currency, 'rat')
-  console.log(currencyRes, 'currencyRes')
-  console.log(response, 'response')
-  useEffect(() => {
-    try {
-      fetch(urlFinance)
-        .then((res) => res.json())
-        .then((res) => {
-          const rat = Object.keys(res.rates)
-          setCurrency([...rat])
-          setCurrencyRes(res)
-        })
-    } catch (e) {
-      console.error(e, 'error')
-    }
-  }, [])
+  const [firstCurrency, setFirstCurrency] = useState(currency[0])
+  const [secondCurrency, setSecondCurrency] = useState(currency[0])
+  const [valueInputs, setValueInput] = useState()
+  const [active, setActive] = useState(true)
+  // console.log(currency[0], 'rat currency[5]')
+  // console.log(currencyRes.rates[firstCurrency], 'currencyRes.rates')
+  // console.log(response, 'response')
+  // console.log(secondCurrency, 'secondCurrency')
+  // console.log(firstCurrency, 'firstCurrency')
+  // console.log(valueInputs, 'valueInputs')
+  // console.log(active, 'active')
+  let firstInput, secondInput
+  if (active && valueInputs != null) {
+    secondInput =
+      (valueInputs * currencyRes.rates[secondCurrency]) /
+      currencyRes.rates[firstCurrency]
+  } else {
+    firstInput =
+      (valueInputs * currencyRes.rates[firstCurrency]) /
+      currencyRes.rates[secondCurrency]
+  }
 
   useEffect(() => {
     try {
@@ -38,7 +44,39 @@ export const Header = () => {
       console.error(er)
     }
   }, [])
+  useEffect(() => {
+    try {
+      setIsLoading(true)
+      fetch(urlFinance)
+        .then((res) => res.json())
+        .then((res) => {
+          const rat = Object.keys(res.rates)
+          setCurrency([...rat])
+          setCurrencyRes(res)
+        })
+    } catch (e) {
+      console.error(e, 'error')
+    } finally {
+      setIsLoading(false)
+    }
+  }, [])
+  const handleFirstChange = (e) => {
+    setValueInput(e.target.value)
+    setActive(true)
+  }
+  const handleSecondChange = (e) => {
+    setValueInput(e.target.value)
+    setActive(false)
+  }
+  const changeFirstCurrency = (e) => {
+    setFirstCurrency(e.target.value)
+    console.log(e.target, 'target')
+  }
+  const changeSecondCurrency = (e) => {
+    setSecondCurrency(e.target.value)
 
+    console.log(e.target, 'target')
+  }
   function timeConverter(UNIX_timestamp) {
     let a = new Date(UNIX_timestamp * 1000)
     let months = [
@@ -74,14 +112,30 @@ export const Header = () => {
       </p>
     </div>
   ))
-
+  const LoadingIndicator = () => <div className={exs.loading}>Loading...</div>
   return (
     <>
       <div className={exs.main_container}>
         <div className={exs.container_rate}>{option}</div>
         <p className={exs.text}>CONVERT -- {timedate}</p>
-        <Rate currency={currency} />
-        <Rate currency={currency} />
+
+        {isLoading || isLoading === null
+          ? LoadingIndicator()
+          : (<Rate
+              currency={currency}
+              // selectedCurrency={firstCurrency}
+              onChangeInput={handleFirstChange}
+              onChangeCurrency={changeFirstCurrency}
+              valueInput={firstInput}
+            />)(
+              <Rate
+                currency={currency}
+                onChangeInput={handleSecondChange}
+                // selectedCurrency={secondCurrency}
+                onChangeCurrency={changeSecondCurrency}
+                valueInput={secondInput}
+              />
+            )}
       </div>
     </>
   )
