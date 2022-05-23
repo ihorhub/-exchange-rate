@@ -65,33 +65,8 @@ export const Header = () => {
   // let now = new Date()
   // console.log(now)
   return (
-    <div>
-      <div className={exs.main_container}>
-        <div className={exs.container_rate}>{option}</div>
-
-        <div className={exs.container_exchange}>
-          <div>
-            <input type="number" className={exs.container_input} />
-            <select name="select" className={exs.select}>
-              <option value="value1">Значение 1</option>
-              <option value="value2" selected>
-                Значение 2
-              </option>
-              <option value="value3">Значение 3</option>
-            </select>
-          </div>
-          <div>
-            <input type="number" className={exs.container_input} />
-            <select name="select" className={exs.select}>
-              <option value="value1">Значение 1</option>
-              <option value="value2" selected>
-                Значение 2
-              </option>
-              <option value="value3">Значение 3</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
+    <>
+      <div className={exs.container_rate}>{option}</div>
+    </>
   )
 }
