@@ -21,7 +21,7 @@
   -o-border-radius: 10px;
 }
 .container_rate {
-  margin: 40px 40px;
+  margin: 20px 20px;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -38,18 +38,18 @@
   -o-border-radius: 10px;
 }
 .container_rate_ccy {
+  width: 230px;
   box-shadow: inset 0px 0px 19px -3px #e1e1bb;
   background: linear-gradient(to bottom, #fefffd 0%, #b3bfaa 123%);
   background-color: #f8f8f8;
-  border-radius: 10px;
+  border-radius: 5px;
   border: 1px solid #b2b8ad;
-
   padding: 0px 20px;
   box-sizing: border-box;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
 }
 .style_rate {
   //   margin: 10px 10px;
@@ -62,8 +62,9 @@
 
 .select {
   width: 10%;
-  height: 35px;
-  box-shadow: inset 0px 0px 19px -3px #e1e1bb;
+  height: 45px;
+  -webkit-box-shadow: inset 0px 0px 3px 0px #000000;
+  box-shadow: inset 0px 0px 3px 0px #000000;
   background: linear-gradient(to bottom, #fefffd 0%, #b3bfaa 123%);
   background-color: #f8f8f8;
   border-radius: 5px;
@@ -76,18 +77,24 @@
 }
 .container_input {
   width: 30%;
-  height: 30px;
+  height: 40px;
   margin: 5px 5px;
   border: 1px solid #cdcdcd;
   border-radius: 5px;
   background: #fbfbfb;
-  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.26);
+  -webkit-box-shadow: inset 0px 0px 3px 0px #000000;
+  box-shadow: inset 0px 0px 3px 0px #000000;
+  box-sizing: border-box;
   @extend%text-style-block-cct;
 
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
+  text-align: center;
+  &:active {
+    border: none;
+  }
   &:focus {
     border: none;
   }
