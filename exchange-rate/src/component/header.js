@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Rate } from './rate'
 import exs from './exchangeStyle.module.scss'
-const urlFinance =
-  'https://openexchangerates.org/api/latest.json?app_id=770556d2b59b4b4a8b064a5ca2df658e'
+
 const urlPrivat =
   'https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=5 '
+const urlFinance =
+  'https://openexchangerates.org/api/latest.json?app_id=770556d2b59b4b4a8b064a5ca2df658e'
 
 export const Header = () => {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(null)
   const [response, setResponse] = useState([])
   const [currency, setCurrency] = useState([])
   const [currencyRes, setCurrencyRes] = useState([])
@@ -15,14 +16,14 @@ export const Header = () => {
   const [secondCurrency, setSecondCurrency] = useState(null)
   const [valueInputs, setValueInput] = useState()
   const [active, setActive] = useState(true)
-
-  console.log(currency[0], 'rat currency[5]')
-  console.log(currencyRes.rates[firstCurrency], 'currencyRes.rates')
-  console.log(response, 'response')
-  console.log(secondCurrency, 'secondCurrency')
-  console.log(firstCurrency, 'firstCurrency')
-  console.log(valueInputs, 'valueInputs')
-  console.log(active, 'active')
+  // консолі не видаляю
+  // console.log(currency[0], 'rat currency[5]')
+  // console.log(currencyRes.rates[firstCurrency], 'currencyRes.rates')
+  // console.log(response, 'response')
+  // console.log(secondCurrency, 'secondCurrency')
+  // console.log(firstCurrency, 'firstCurrency')
+  // console.log(valueInputs, 'valueInputs')
+  // console.log(active, 'active')
   let firstInput, secondInput
   if (active) {
     secondInput =
