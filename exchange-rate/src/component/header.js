@@ -7,7 +7,7 @@ const urlPrivat =
   'https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=5 '
 
 export const Header = () => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [response, setResponse] = useState([])
   const [currency, setCurrency] = useState([])
   const [currencyRes, setCurrencyRes] = useState([])
@@ -24,7 +24,7 @@ export const Header = () => {
   console.log(valueInputs, 'valueInputs')
   console.log(active, 'active')
   let firstInput, secondInput
-  if (active && valueInputs != null && undefined) {
+  if (active) {
     secondInput =
       (valueInputs * currencyRes.rates[secondCurrency]) /
       currencyRes.rates[firstCurrency]
@@ -74,12 +74,9 @@ export const Header = () => {
   }
   const changeFirstCurrency = (e) => {
     setFirstCurrency(e.target.value)
-    console.log(e.target, 'target')
   }
   const changeSecondCurrency = (e) => {
     setSecondCurrency(e.target.value)
-
-    console.log(e.target, 'target')
   }
   function timeConverter(UNIX_timestamp) {
     let a = new Date(UNIX_timestamp * 1000)
@@ -119,7 +116,6 @@ export const Header = () => {
   const LoadingIndicator = () => <div className={exs.loading}>Loading...</div>
   return (
     <>
-      {' '}
       {isLoading || isLoading === null ? (
         LoadingIndicator()
       ) : (
