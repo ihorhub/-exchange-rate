@@ -6,24 +6,25 @@ const urlFinance =
 const urlPrivat =
   'https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=5 '
 
-export const Header = () => {
-  const [isLoading, setIsLoading] = useState(false)
+export const Header = ({ setIsLoading }) => {
+  // const [isLoading, setIsLoading] = useState(false)
   const [response, setResponse] = useState([])
   const [currency, setCurrency] = useState([])
   const [currencyRes, setCurrencyRes] = useState([])
-  const [firstCurrency, setFirstCurrency] = useState(currency[0])
-  const [secondCurrency, setSecondCurrency] = useState(currency[0])
+  const [firstCurrency, setFirstCurrency] = useState(null)
+  const [secondCurrency, setSecondCurrency] = useState(null)
   const [valueInputs, setValueInput] = useState()
   const [active, setActive] = useState(true)
-  // console.log(currency[0], 'rat currency[5]')
-  // console.log(currencyRes.rates[firstCurrency], 'currencyRes.rates')
-  // console.log(response, 'response')
-  // console.log(secondCurrency, 'secondCurrency')
-  // console.log(firstCurrency, 'firstCurrency')
-  // console.log(valueInputs, 'valueInputs')
-  // console.log(active, 'active')
+
+  console.log(currency[0], 'rat currency[5]')
+  console.log(currencyRes.rates[firstCurrency], 'currencyRes.rates')
+  console.log(response, 'response')
+  console.log(secondCurrency, 'secondCurrency')
+  console.log(firstCurrency, 'firstCurrency')
+  console.log(valueInputs, 'valueInputs')
+  console.log(active, 'active')
   let firstInput, secondInput
-  if (active && valueInputs != null) {
+  if (active && valueInputs != null && undefined) {
     secondInput =
       (valueInputs * currencyRes.rates[secondCurrency]) /
       currencyRes.rates[firstCurrency]
@@ -35,6 +36,7 @@ export const Header = () => {
 
   useEffect(() => {
     try {
+      setIsLoading(false)
       fetch(urlPrivat)
         .then((res) => res.json())
         .then((res) => {
@@ -42,11 +44,13 @@ export const Header = () => {
         })
     } catch (er) {
       console.error(er)
+    } finally {
+      setIsLoading(false)
     }
   }, [])
   useEffect(() => {
     try {
-      setIsLoading(true)
+      setIsLoading(false)
       fetch(urlFinance)
         .then((res) => res.json())
         .then((res) => {
@@ -112,30 +116,26 @@ export const Header = () => {
       </p>
     </div>
   ))
-  const LoadingIndicator = () => <div className={exs.loading}>Loading...</div>
+
   return (
     <>
       <div className={exs.main_container}>
         <div className={exs.container_rate}>{option}</div>
         <p className={exs.text}>CONVERT -- {timedate}</p>
-
-        {isLoading || isLoading === null
-          ? LoadingIndicator()
-          : (<Rate
-              currency={currency}
-              // selectedCurrency={firstCurrency}
-              onChangeInput={handleFirstChange}
-              onChangeCurrency={changeFirstCurrency}
-              valueInput={firstInput}
-            />)(
-              <Rate
-                currency={currency}
-                onChangeInput={handleSecondChange}
-                // selectedCurrency={secondCurrency}
-                onChangeCurrency={changeSecondCurrency}
-                valueInput={secondInput}
-              />
-            )}
+        <Rate
+          currency={currency}
+          // selectedCurrency={firstCurrency}
+          onChangeInput={handleFirstChange}
+          onChangeCurrency={changeFirstCurrency}
+          valueInput={firstInput}
+        />
+        <Rate
+          currency={currency}
+          onChangeInput={handleSecondChange}
+          // selectedCurrency={secondCurrency}
+          onChangeCurrency={changeSecondCurrency}
+          valueInput={secondInput}
+        />
       </div>
     </>
   )
