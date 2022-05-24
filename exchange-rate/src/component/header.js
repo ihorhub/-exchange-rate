@@ -6,8 +6,8 @@ const urlFinance =
 const urlPrivat =
   'https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=5 '
 
-export const Header = ({ setIsLoading }) => {
-  // const [isLoading, setIsLoading] = useState(false)
+export const Header = () => {
+  const [isLoading, setIsLoading] = useState(false)
   const [response, setResponse] = useState([])
   const [currency, setCurrency] = useState([])
   const [currencyRes, setCurrencyRes] = useState([])
@@ -36,7 +36,7 @@ export const Header = ({ setIsLoading }) => {
 
   useEffect(() => {
     try {
-      setIsLoading(false)
+      setIsLoading(true)
       fetch(urlPrivat)
         .then((res) => res.json())
         .then((res) => {
@@ -50,7 +50,7 @@ export const Header = ({ setIsLoading }) => {
   }, [])
   useEffect(() => {
     try {
-      setIsLoading(false)
+      setIsLoading(true)
       fetch(urlFinance)
         .then((res) => res.json())
         .then((res) => {
@@ -116,27 +116,32 @@ export const Header = ({ setIsLoading }) => {
       </p>
     </div>
   ))
-
+  const LoadingIndicator = () => <div className={exs.loading}>Loading...</div>
   return (
     <>
-      <div className={exs.main_container}>
-        <div className={exs.container_rate}>{option}</div>
-        <p className={exs.text}>CONVERT -- {timedate}</p>
-        <Rate
-          currency={currency}
-          // selectedCurrency={firstCurrency}
-          onChangeInput={handleFirstChange}
-          onChangeCurrency={changeFirstCurrency}
-          valueInput={firstInput}
-        />
-        <Rate
-          currency={currency}
-          onChangeInput={handleSecondChange}
-          // selectedCurrency={secondCurrency}
-          onChangeCurrency={changeSecondCurrency}
-          valueInput={secondInput}
-        />
-      </div>
+      {' '}
+      {isLoading || isLoading === null ? (
+        LoadingIndicator()
+      ) : (
+        <div className={exs.main_container}>
+          <div className={exs.container_rate}>{option}</div>
+          <p className={exs.text}>CONVERT -- {timedate}</p>
+          <Rate
+            currency={currency}
+            // selectedCurrency={firstCurrency}
+            onChangeInput={handleFirstChange}
+            onChangeCurrency={changeFirstCurrency}
+            valueInput={firstInput}
+          />
+          <Rate
+            currency={currency}
+            onChangeInput={handleSecondChange}
+            // selectedCurrency={secondCurrency}
+            onChangeCurrency={changeSecondCurrency}
+            valueInput={secondInput}
+          />
+        </div>
+      )}
     </>
   )
 }
