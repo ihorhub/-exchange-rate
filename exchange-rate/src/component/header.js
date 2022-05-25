@@ -4,36 +4,57 @@ import exs from './exchangeStyle.module.scss'
 
 const urlPrivat =
   'https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=5 '
+
+// JSON[
+//   ({
+//     ccy: 'RUR',
+//     base_ccy: 'UAH',
+//     buy: '0.28000',
+//     sale: '0.32000'
+//   },
+//   {
+//     ccy: 'EUR',
+//     base_ccy: 'UAH',
+//     buy: '19.20000',
+//     sale: '20.00000'
+//   },
+//   {
+//     ccy: 'USD',
+//     base_ccy: 'UAH',
+//     buy: '15.50000',
+//     sale: '15.85000'
+//   })
+// ]
 const urlFinance =
   'https://openexchangerates.org/api/latest.json?app_id=770556d2b59b4b4a8b064a5ca2df658e'
-
+//   {
+//     disclaimer: "Usage subject to terms: https://openexchangerates.org/terms",
+//     license: "https://openexchangerates.org/license",
+//     timestamp: 1582466108,
+//     base: "USD",
+//     rates: {
+//         CNY: 7.0272,
+//         UAH: 24.472774
+//....................   }
+// }
 export const Header = () => {
   const [isLoading, setIsLoading] = useState(null)
   const [response, setResponse] = useState([])
   const [currency, setCurrency] = useState([])
   const [currencyRes, setCurrencyRes] = useState([])
-  const [firstCurrency, setFirstCurrency] = useState(null)
-  const [secondCurrency, setSecondCurrency] = useState(null)
-  const [valueInputs, setValueInput] = useState()
+  const [firstCurrency, setFirstCurrency] = useState()
+  const [secondCurrency, setSecondCurrency] = useState()
+  const [valueInputs, setValueInput] = useState(null)
   const [active, setActive] = useState(true)
   // консолі не видаляю
-  // console.log(currency[0], 'rat currency[5]')
+  console.log(currency[0], 'rat currency[5]')
   // console.log(currencyRes.rates[firstCurrency], 'currencyRes.rates')
   // console.log(response, 'response')
-  // console.log(secondCurrency, 'secondCurrency')
-  // console.log(firstCurrency, 'firstCurrency')
-  // console.log(valueInputs, 'valueInputs')
+  console.log(currencyRes, 'curencyRes')
+  console.log(secondCurrency, 'secondCurrency')
+  console.log(firstCurrency, 'firstCurrency')
+  console.log(valueInputs, 'valueInputs')
   // console.log(active, 'active')
-  let firstInput, secondInput
-  if (active) {
-    secondInput =
-      (valueInputs * currencyRes.rates[secondCurrency]) /
-      currencyRes.rates[firstCurrency]
-  } else {
-    firstInput =
-      (valueInputs * currencyRes.rates[firstCurrency]) /
-      currencyRes.rates[secondCurrency]
-  }
 
   useEffect(() => {
     try {
@@ -79,6 +100,20 @@ export const Header = () => {
   const changeSecondCurrency = (e) => {
     setSecondCurrency(e.target.value)
   }
+
+  let firstInput, secondInput
+  if (active && firstCurrency !== undefined && secondCurrency !== undefined) {
+    // firstInput = valueInputs
+    secondInput = (
+      (valueInputs * currencyRes.rates[secondCurrency]) /
+      currencyRes.rates[firstCurrency]
+    ).toFixed(2)
+  } else if (!active) {
+    firstInput = (
+      (valueInputs * currencyRes.rates[firstCurrency]) /
+      currencyRes.rates[secondCurrency]
+    ).toFixed(2)
+  }
   function timeConverter(UNIX_timestamp) {
     let a = new Date(UNIX_timestamp * 1000)
     let months = [
@@ -103,6 +138,7 @@ export const Header = () => {
   }
 
   let timedate = timeConverter(currencyRes.timestamp)
+
   const option = response.map((el) => (
     <div className={exs.container_rate_ccy}>
       <p className={exs.style_rate_ccy}> {el.ccy} </p>
@@ -114,6 +150,7 @@ export const Header = () => {
       </p>
     </div>
   ))
+
   const LoadingIndicator = () => <div className={exs.loading}>Loading...</div>
   return (
     <>
@@ -123,9 +160,10 @@ export const Header = () => {
         <div className={exs.main_container}>
           <div className={exs.container_rate}>{option}</div>
           <p className={exs.text}>CONVERT -- {timedate}</p>
+
           <Rate
             currency={currency}
-            // selectedCurrency={firstCurrency}
+            selectedCurrency={firstCurrency}
             onChangeInput={handleFirstChange}
             onChangeCurrency={changeFirstCurrency}
             valueInput={firstInput}
@@ -133,10 +171,12 @@ export const Header = () => {
           <Rate
             currency={currency}
             onChangeInput={handleSecondChange}
-            // selectedCurrency={secondCurrency}
+            selectedCurrency={secondCurrency}
             onChangeCurrency={changeSecondCurrency}
             valueInput={secondInput}
           />
+
+          <p>only for test "author": "Ihor Babii ihor.babiy2203@gmail.com"</p>
         </div>
       )}
     </>

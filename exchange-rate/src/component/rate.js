@@ -4,7 +4,7 @@ import exr from './exchangeStyle.module.scss'
 export const Rate = ({
   currency,
   onChangeCurrency,
-  // selectedCurrency,
+  selectedCurrency,
   onChangeInput,
   valueInput
 }) => {
@@ -19,8 +19,8 @@ export const Rate = ({
             onChange={onChangeInput}
           />
           <select
-            // name="select"
-            // value={selectedCurrency}
+            name="select"
+            value={selectedCurrency}
             className={exr.select}
             onChange={onChangeCurrency}
           >
