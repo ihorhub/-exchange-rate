@@ -176,7 +176,10 @@ export const Header = () => {
             valueInput={secondInput}
           />
 
-          <p>only for test "author": "Ihor Babii ihor.babiy2203@gmail.com"</p>
+          <p>
+            only for test "author": Ihor Babii <br />
+            e-mail:"ihor.babiy2203@gmail.com"
+          </p>
         </div>
       )}
     </>
