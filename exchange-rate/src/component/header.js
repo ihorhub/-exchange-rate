@@ -42,19 +42,10 @@ export const Header = () => {
   const [response, setResponse] = useState([])
   const [currency, setCurrency] = useState([])
   const [currencyRes, setCurrencyRes] = useState([])
-  const [firstCurrency, setFirstCurrency] = useState(currency[0])
-  const [secondCurrency, setSecondCurrency] = useState(currency[0])
+  const [firstCurrency, setFirstCurrency] = useState()
+  const [secondCurrency, setSecondCurrency] = useState()
   const [valueInputs, setValueInput] = useState(null)
   const [active, setActive] = useState(true)
-  // консолі не видаляю
-  // console.log(currency[0], 'rat currency[5]')
-  // console.log(currencyRes.rates[firstCurrency], 'currencyRes.rates')
-  // console.log(response, 'response')
-  // console.log(currencyRes, 'curencyRes')
-  // console.log(secondCurrency, 'secondCurrency')
-  // console.log(firstCurrency, 'firstCurrency')
-  // console.log(valueInputs, 'valueInputs')
-  // console.log(active, 'active')
 
   useEffect(() => {
     try {
@@ -94,16 +85,18 @@ export const Header = () => {
     setValueInput(e.target.value)
     setActive(false)
   }
+
   const changeFirstCurrency = (e) => {
     setFirstCurrency(e.target.value)
   }
+
   const changeSecondCurrency = (e) => {
     setSecondCurrency(e.target.value)
   }
 
   let firstInput, secondInput
   if (active && firstCurrency !== undefined && secondCurrency !== undefined) {
-    // firstInput = valueInputs
+    firstInput = valueInputs
     secondInput = (
       (valueInputs * currencyRes.rates[secondCurrency]) /
       currencyRes.rates[firstCurrency]
@@ -114,6 +107,7 @@ export const Header = () => {
       currencyRes.rates[secondCurrency]
     ).toFixed(2)
   }
+
   function timeConverter(UNIX_timestamp) {
     let a = new Date(UNIX_timestamp * 1000)
     let months = [
@@ -139,7 +133,7 @@ export const Header = () => {
 
   let timedate = timeConverter(currencyRes.timestamp)
 
-  const option = response.map((el) => (
+  const option = response?.map((el) => (
     <div className={exs.container_rate_ccy}>
       <p className={exs.style_rate_ccy}> {el.ccy} </p>
       <p className={exs.style_rate}>
@@ -151,7 +145,11 @@ export const Header = () => {
     </div>
   ))
 
-  const LoadingIndicator = () => <div className={exs.loading}>Loading...</div>
+  const LoadingIndicator = () => (
+    <div className={exs.main_container}>
+      <div className={exs.loader}>Loading...</div>
+    </div>
+  )
   return (
     <>
       {isLoading || isLoading === null ? (

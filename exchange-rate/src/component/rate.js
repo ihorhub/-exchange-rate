@@ -24,11 +24,12 @@ export const Rate = ({
             className={exr.select}
             onChange={onChangeCurrency}
           >
-            {currency.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
+            {currency &&
+              currency?.map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
           </select>
         </div>
       </div>
