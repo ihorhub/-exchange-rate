@@ -152,7 +152,7 @@ export const Header = () => {
   )
   return (
     <>
-      {isLoading || isLoading === null ? (
+      {isLoading || (isLoading === null) ? (
         LoadingIndicator()
       ) : (
         <div className={exs.main_container}>
